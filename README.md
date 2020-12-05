@@ -1,1 +1,1 @@
-# dkube-examples
+# dkube-training
