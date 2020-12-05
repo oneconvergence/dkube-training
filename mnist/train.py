@@ -6,11 +6,12 @@ import numpy as np
 import tensorflow as tf
 
 batch_size = 128
-epochs = int(os.getenv("EPOCHS","15"))
+epochs = int(os.getenv("EPOCHS","1"))
 print ("Number of epochs:", epochs)
 num_classes = 10
 input_shape = (28, 28, 1)
 MODEL_DIR = "/opt/dkube/output"
+
 #load dataset
 f = gzip.open('/mnist/mnist.pkl.gz', 'rb')
 data = pickle.load(f, encoding='bytes')
@@ -46,6 +47,7 @@ model = keras.Sequential(
     ]
 )
 
+# mlflow metric logging
 class loggingCallback(keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         log_metric ("train_loss", logs["loss"], step=epoch)
