@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 
 batch_size = 128
-epochs = int(os.getenv("EPOCHS","1"))
+epochs = int(os.getenv("EPOCHS","5"))
 print ("Number of epochs:", epochs)
 num_classes = 10
 input_shape = (28, 28, 1)
