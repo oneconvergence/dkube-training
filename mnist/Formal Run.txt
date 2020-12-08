@@ -1,0 +1,21 @@
+# Add mlflow import
+from mlflow import log_metric
+
+# Add directory for output model
+MODEL_DIR = "/opt/dkube/output"
+
+# Add mlflow metric calls
+class loggingCallback(keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        log_metric ("train_loss", logs["loss"], step=epoch)
+        log_metric ("train_accuracy", logs["accuracy"], step=epoch)
+        log_metric ("val_loss", logs["val_loss"], step=epoch)
+        log_metric ("val_accuracy", logs["val_accuracy"], step=epoch)
+
+# Replace training command for formal training
+model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=0, validation_split=0.1, 
+        callbacks=[loggingCallback(), tf.keras.callbacks.TensorBoard(log_dir=MODEL_DIR)])
+
+# Add code to write saved model after training
+os.makedirs(f"{MODEL_DIR}/1", exist_ok=True)
+tf.saved_model.save(model,f"{MODEL_DIR}/1")
